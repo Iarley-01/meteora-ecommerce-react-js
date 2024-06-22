@@ -29,6 +29,25 @@ const Produtos = () => {
     }))
   }
   
+  function removerProduto(idProduto) {
+      const estaNoCarrinho = carrinho.find((itemDoCarrinho) => itemDoCarrinho.id === idProduto);
+      
+      if (!estaNoCarrinho) {
+        return;
+      }
+      
+      if (estaNoCarrinho.quantidade === 1) {
+        setCarrinho(carrinhoAnterior => carrinhoAnterior.filter(itemDoCarrinho => itemDoCarrinho.id === idProduto));
+      } else {
+        setCarrinho(carrinhoAnterior => carrinhoAnterior.map(itemDoCarrinho => {
+          if (itemDoCarrinho.id === idProduto) {
+            itemDoCarrinho.quantidade -= 1;
+          }
+          return itemDoCarrinho;
+        }));
+     }
+   }
+  
   return (
     <section role="produtos" aria-label="Produtos que estão bombando!">
       <Titulo>Produtos que estão bombando!</Titulo>
