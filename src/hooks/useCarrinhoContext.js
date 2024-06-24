@@ -4,10 +4,16 @@ import { CarrinhoContext } from "@/context/CarrinhoContext";
 export const useCarrinhoContext = () => {
   const { carrinho, setCarrinho } = useContext(CarrinhoContext);
   
-  function adicionarProduto(novoProduto) {
-    const temOProduto = carrinho.some((itemDoCarrinho) => {
-      itemDoCarrinho.id === novoProduto.id
+  function mudarQuantidade(id, quantidade) {
+    carrinho.map((itemDoCarrinho) => {
+      if (itemDoCarrinho.id === id) itemDoCarrinho.quantidade += quantidade;
     });
+  }
+  
+  function adicionarProduto(novoProduto) {
+    const temOProduto = carrinho.some((itemDoCarrinho) => (
+      itemDoCarrinho.id === novoProduto.id
+    ));
     
     if (!temOProduto) {
       novoProduto.quantidade = 1;
@@ -17,12 +23,9 @@ export const useCarrinhoContext = () => {
       ]);
     }
     
-    setCarrinho((carrinhoAnterior) => carrinhoAnterior.map((itemDoCarrinho) => {
-      if (itemDoCarrinho.id === novoProduto.id) itemDoCarrinho.quantidade += 1;
-      return itemDoCarrinho;
-
-      
-    }))
+    const carrinhoAtualizado = mudarQuantidade(novoProduto.id, 1);
+    
+    setCarrinho([...carrinhoAtualizado]);
   }
   
   function removerProduto(idProduto) {
@@ -35,12 +38,8 @@ export const useCarrinhoContext = () => {
       if (estaNoCarrinho.quantidade === 1) {
         setCarrinho(carrinhoAnterior => carrinhoAnterior.filter(itemDoCarrinho => itemDoCarrinho.id === idProduto));
       } else {
-        setCarrinho(carrinhoAnterior => carrinhoAnterior.map(itemDoCarrinho => {
-          if (itemDoCarrinho.id === idProduto) {
-            itemDoCarrinho.quantidade -= 1;
-          }
-          return itemDoCarrinho;
-        }));
+        const carrinhoAtualizado = mudarQuantidade(idProduto, -1);
+        setCarrinho([...carrinhoAtualizado]);
      }
    }
    
