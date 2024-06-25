@@ -24,13 +24,6 @@ export const useCarrinhoContext = () => {
   quantidade,
   valorTotal } = useContext(CarrinhoContext);
   
-  function mudarQuantidade(id, quantidade) {
-    return carrinho.map((itemDoCarrinho) => {
-      if (itemDoCarrinho.id === id) itemDoCarrinho.quantidade += quantidade;
-      return itemDoCarrinho;
-    });
-  }
-  
   function adicionarProduto(novoProduto) {
     dispatch(addProdutoAction(novoProduto));
   }
