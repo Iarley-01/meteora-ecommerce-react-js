@@ -32,41 +32,21 @@ export const useCarrinhoContext = () => {
   }
   
   function adicionarProduto(novoProduto) {
-    const temOProduto = carrinho.some((itemDoCarrinho) => (
-      itemDoCarrinho.id === novoProduto.id
-    ));
-    
-    if (!temOProduto) {
-      novoProduto.quantidade = 1;
-      return setCarrinho((carrinhoAnterior) => [
-        ...carrinhoAnterior,
-        novoProduto
-      ]);
-    }
-    
-    const carrinhoAtualizado = mudarQuantidade(novoProduto.id, 1);
-    
-    setCarrinho([...carrinhoAtualizado]);
+    dispatch(addProdutoAction(novoProduto));
   }
   
   function removerProduto(idProduto) {
-      const estaNoCarrinho = carrinho.find((itemDoCarrinho) => itemDoCarrinho.id === idProduto);
-      
-      if (!estaNoCarrinho) {
-        return;
-      }
-      
-      if (estaNoCarrinho.quantidade === 1) {
-        setCarrinho(carrinhoAnterior => carrinhoAnterior.filter(itemDoCarrinho => itemDoCarrinho.id === idProduto));
-      } else {
-        const carrinhoAtualizado = mudarQuantidade(idProduto, -1);
-        setCarrinho([...carrinhoAtualizado]);
-     }
-   }
+    const produto = carrinho.find((item) => item.id === id);
+
+    if (produto && produto.quantidade > 1) {
+      dispatch(updateQuantidadeAction(id, produto.quantidade - 1));
+    } else {
+      dispatch(removeProdutoAction(id));
+    }
+  }
    
    function removerProdutoCarrinho(id){
-    const produto = carrinho.filter((itemDoCarrinho) => itemDoCarrinho.id !== id);
-    setCarrinho(produto);
+    dispatch(removeProdutoAction(id));
    }
    
    const { totalTemporario, quantidadeTemporaria } = useMemo(() => {
