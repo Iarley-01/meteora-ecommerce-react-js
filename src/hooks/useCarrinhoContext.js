@@ -49,23 +49,6 @@ export const useCarrinhoContext = () => {
     dispatch(removeProdutoAction(id));
    }
    
-   const { totalTemporario, quantidadeTemporaria } = useMemo(() => {
-    return carrinho.reduce((acumulador, produto) => ({
-      quantidadeTemporaria: acumulador.quantidadeTemporaria + produto.quantidade,
-      totalTemporario: acumulador.totalTemporario + produto.preco * produto.quantidade
-    }),
-    {
-      quantidadeTemporaria: 0,
-      totalTemporario: 0
-    }
-    );
-   }, [carrinho]);
-   
-   useEffect(() => {
-    setQuantidade(quantidadeTemporaria);
-    setValorTotal(totalTemporario);
-   });
-   
    return {
     carrinho,
     setCarrinho,
