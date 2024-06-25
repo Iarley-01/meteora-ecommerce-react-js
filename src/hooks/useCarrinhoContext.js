@@ -51,11 +51,8 @@ export const useCarrinhoContext = () => {
    
    return {
     carrinho,
-    setCarrinho,
     valorTotal,
-    setValorTotal,
     quantidade,
-    setQuantidade,
     adicionarProduto,
     removerProduto,
     removerProdutoCarrinho,
