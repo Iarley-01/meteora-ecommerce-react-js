@@ -1,13 +1,13 @@
 import { useContext, useEffect, useMemo } from "react";
 import { CarrinhoContext } from "@/context/CarrinhoContext";
 
+import { ADD_PRODUTO, REMOVE_PRODUTO, UPDATE_QUANTIDADE } from "@/reducers/carrinhoReducer";
+
 export const useCarrinhoContext = () => {
-  const { carrinho, 
-  setCarrinho, 
+  const { carrinho,
+  dispatch,
   quantidade,
-  setQuantidade,
-  valorTotal,
-  setValorTotal } = useContext(CarrinhoContext);
+  valorTotal } = useContext(CarrinhoContext);
   
   function mudarQuantidade(id, quantidade) {
     return carrinho.map((itemDoCarrinho) => {
